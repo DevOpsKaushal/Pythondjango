@@ -1,4 +1,4 @@
-FROM Python:3.12
+FROM python3:3.12
 COPY . /opt
 RUN pip install -r requirements.txt
 EXPOSE 9000
