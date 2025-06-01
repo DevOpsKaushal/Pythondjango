@@ -20,7 +20,7 @@ jobs:
     - name: docker image tag
       run: docker tag django:v${{ github.run_number }} iamkaushal20/deerwalk:v${{ github.run_number }}
     - name: docker login
-      run: docker login -u ${{ vars.USERNAME }} -p ${{ vars.PASSWORD }}
+      run: docker login -u iamkaushal20 -p Kaushal2059
     - name: docker push
       run: docker push iamkaushal20/deerwalk:v${{ github.run_number }}
   deploy:
