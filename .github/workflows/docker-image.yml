@@ -24,8 +24,15 @@ jobs:
     - name: docker push
       run: docker push iamkaushal20/deerwalk:v${{ github.run_number }}
   deploy:
+    needs: build
 
     runs-on: deploy
     steps: 
-    - name: pull docker image
+    - name: print hostname
       run: hostname
+    - name: stop container if exists
+      run: docker container stop app
+    - name: delete container
+      run: docker container rm app
+    - name: pull conimage and run container
+      run: docker run --name app -p 9000:9000 -d iamkaushal20/deerwalk:v${{ github.run_number }}
