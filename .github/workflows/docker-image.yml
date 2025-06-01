@@ -19,8 +19,6 @@ jobs:
       run: docker build -t django:v${{ github.run_number }} .
     - name: docker image tag
       run: docker tag django:v${{ github.run_number }} iamkaushal20/deerwalk:v${{ github.run_number }}
-    - name: print credentials
-      run: echo "Username: ${{ vars.USERNAME }}, Password: ${{ secrets.PASSWORD }}"
     - name: docker login
       run: docker login -u ${{ vars.USERNAME }} -p ${{ secrets.PASSWORD}}
     - name: docker push
