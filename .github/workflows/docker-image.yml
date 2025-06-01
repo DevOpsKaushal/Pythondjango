@@ -16,7 +16,7 @@ jobs:
     - name: print hostname
       run: hostname
     - name: build docker image
-      run: docker build -f Pythondjango/App/Dockerfile -t django:v${{ github.run_number }} .
+      run: docker build -t django:v${{ github.run_number }} .
     - name: docker image tag
       run: docker tag django:v iamkaushal20/deerwalk:v${{ github.run_number }}
     - name: docker login
