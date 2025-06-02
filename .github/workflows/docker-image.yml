@@ -25,7 +25,7 @@ jobs:
       run: docker push iamkaushal20/deerwalk:v${{ github.run_number }}
   deploy:
     needs: build
-    runs-on: deploy
+    runs-on: fetch
     steps: 
     - name: print hostname
       run: hostname
