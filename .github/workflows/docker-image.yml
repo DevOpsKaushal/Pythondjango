@@ -27,7 +27,7 @@ jobs:
     needs: build
     runs-on: fetch
     steps: 
-    - name: print hostname
+    - name: print hostname ok
       run: hostname
     - name: stop container if exists
       run: docker container stop app
