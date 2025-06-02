@@ -9,7 +9,7 @@ on:
 jobs:
 
   build:
-    runs-on: fetch
+    runs-on: deploy
 
     steps:
     - uses: actions/checkout@v4
@@ -18,14 +18,20 @@ jobs:
     - name: build docker image
       run: docker build -t django:v${{ github.run_number }} .
     - name: docker image tag
-      run: docker tag django:v iamkaushal20/deerwalk:v${{ github.run_number }}
+      run: docker tag django:v${{ github.run_number }} iamkaushal20/deerwalk:v${{ github.run_number }}
     - name: docker login
-      run: docker login -u ${{ vars.USERNAME }} -p ${{ vars.PASSWORD }}
+      run: docker login -u ${{ vars.USERNAME }} -p ${{ secrets.PASSWORD1 }}
     - name: docker push
       run: docker push iamkaushal20/deerwalk:v${{ github.run_number }}
   deploy:
-
-    runs-on: deploy
+    needs: build
+    runs-on: fetch
     steps: 
-    - name: pull docker image
+    - name: print hostname ok
       run: hostname
+    - name: stop container if exists
+      run: docker container stop app
+    - name: delete container
+      run: docker container rm app
+    - name: pull conimage and run container
+      run: docker run --name app -p 9000:9000 -d iamkaushal20/deerwalk:v${{ github.run_number }}
