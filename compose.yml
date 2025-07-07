@@ -1,0 +1,29 @@
+services:
+  db:
+   image: mariadb:latest
+   healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+   ports:
+     - 3306:3306
+   environment:
+     MARIADB_DATABASE: django
+     MARIADB_ROOT_PASSWORD: 'newpassword'
+   networks:
+     - devops
+
+  app:
+    image: iamkaushal20/deerwalk:v50
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+     - 9000:9000
+    env_file: ".env"
+    networks:
+     - devops
+networks:
+  devops:
+
